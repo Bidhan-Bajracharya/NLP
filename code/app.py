@@ -21,13 +21,13 @@ def cosine_similarity(A, B):
     similarity = dot_product / (norm_a * norm_b)
     return similarity
 
-def find_next_10_cosine_words_for_word(target_word, embeddings, top_n=10):
+def similarWords(target_word, embeddings, top_n=10):
     if target_word not in embeddings:
         return ["Word not in Corpus"]
 
     target_vector = embeddings[target_word]
     cosine_similarities = [(word, cosine_similarity(target_vector, embeddings[word])) for word in embeddings.keys()]
-    top_n_words = nlargest(top_n + 1, cosine_similarities, key=lambda x: x[1])
+    top_n_words = nlargest(top_n + 1, cosine_similarities, key=lambda x: x[1]) # '+1' because we want to exclude the target word itself
 
     # Exclude the target word itself
     top_n_words = [word for word, _ in top_n_words if word != target_word]
@@ -126,7 +126,7 @@ def search(n_clicks, query, model):
             return html.Div("Please select a model from the dropdown.", style={'color': 'red'})
         
         embeddings = embedding_dicts.get(model) # using the chosen model
-        results = find_next_10_cosine_words_for_word(query, embeddings)
+        results = similarWords(query, embeddings)
         return html.Div([
             html.H4(f"Results for '{query}' using model '{mapping[model]}':"),
             html.Ul([html.Li(result) for result in results], style={'list-style-type': 'none'})
