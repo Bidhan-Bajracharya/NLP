@@ -117,8 +117,9 @@ app.layout = html.Div([
         style={
             'margin-top': '40px',
             'padding': '20px',
-            'textAlign': 'center',
-            'font-family': 'Arial, sans-serif'
+            'font-family': 'Arial, sans-serif',
+            'display': 'flex',
+            'justify-content': 'center',
         }
     ),
 ])
@@ -162,11 +163,19 @@ def search(n_clicks, query):
                 )
 
                 results.append(html.Div([
-                    html.H5(f"Temperature: {temperature}"),
-                    html.P(" ".join(tokens), style={'color': 'black', 'font-family': 'Arial, sans-serif'})
+                    html.H5(f"Temperature: {temperature}", style={'margin-bottom': '10px', 'font-family': 'Arial, sans-serif'}),
+                    html.P(" ".join(tokens), style={'color': 'black', 'font-family': 'Arial, sans-serif', 'textAlign': 'left'})
                 ]))
 
-            return html.Div(results)
+            return html.Div(results, style={
+                'background-color': '#f9f9f9',
+                'border': '1px solid #e0e0e0',
+                'border-radius': '10px',
+                'padding': '20px',
+                'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.1)',
+                'textAlign': 'left',
+                'max-width': '50%',
+            })
 
     return html.Div("Enter a query to see results.", style={'color': 'gray'})
 
