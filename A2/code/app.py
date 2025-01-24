@@ -12,19 +12,18 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Initialize a basic English tokenizer from torchtext
 tokenizer = get_tokenizer('basic_english')
 
-# Get the absolute path of the current script
+# Absolute path of the current script
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Construct the path to the model
+# Path to the model
 model_path = os.path.join(current_dir, "../model/vocab_lm.pkl")
 
-# Load the vocabulary from the saved file
+# Loading the vocabulary from the saved file
 with open(model_path, 'rb') as f:
     loaded_vocab = pickle.load(f)
 
 # Load the trained LSTM language model
 model_path_2 = os.path.join(current_dir, "../model/best-val-lstm_lm.pt")
-# model_path_2 = os.path.join(current_dir, "../model/lstm_model.pkl")
 
 vocab_size = len(loaded_vocab)
 emb_dim = 1024
@@ -44,23 +43,20 @@ def generate_text(prompt, max_seq_len, temperature, model, tokenizer, vocab, dev
     batch_size = 1
     hidden = model.init_hidden(batch_size, device)
     with torch.no_grad():
-        for i in range(max_seq_len):
+        for _ in range(max_seq_len):
             src = torch.LongTensor([indices]).to(device)
             prediction, hidden = model(src, hidden)
-            
-            # prediction: [batch size, seq len, vocab size]
-            # prediction[:, -1]: [batch size, vocab size] # probability of last vocab
             
             probs = torch.softmax(prediction[:, -1] / temperature, dim=-1)  
             prediction = torch.multinomial(probs, num_samples=1).item()    
             
-            while prediction == vocab['<unk>']:  # if it is unk, we sample again
+            while prediction == vocab['<unk>']:  # sample again if <unk>
                 prediction = torch.multinomial(probs, num_samples=1).item()
 
-            if prediction == vocab['<eos>']:  # if it is eos, we stop
+            if prediction == vocab['<eos>']:  # stop is <eos>
                 break
 
-            indices.append(prediction)  # autoregressive, thus output becomes input
+            indices.append(prediction)  # output becomes input because autoregressive
 
     itos = vocab.get_itos()
     tokens = [itos[i] for i in indices]
@@ -141,14 +137,6 @@ def search(n_clicks, query):
             temperatures = [0.5, 0.7, 0.75, 0.8, 1.0]
 
             results = []
-
-            # path = os.path.join(current_dir, "../model/lstm_model.pkl")
-            # with open(path, 'rb') as f:
-            #     lstm_model = pickle.load(f)
-
-            # lstm_model.load_state_dict(torch.load(path, map_location=device))
-            # lstm_model.to(device)
-            # lstm_model.eval()
 
             for temperature in temperatures:
                 tokens = generate_text(
