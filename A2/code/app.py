@@ -30,8 +30,8 @@ vocab_size = len(loaded_vocab)
 emb_dim = 1024
 hid_dim = 1024
 num_layers = 2
-dropout_rate = 0.65             
-lr = 1e-3   
+dropout_rate = 0.65     
+
 lstm_model = LSTMLanguageModel(vocab_size, emb_dim, hid_dim, num_layers, dropout_rate).to(device)
 lstm_model.load_state_dict(torch.load(model_path_2, map_location=device))
 
@@ -40,7 +40,7 @@ def generate_text(prompt, max_seq, temperature, model, tokenizer, vocab, device,
         torch.manual_seed(seed)
 
     model.eval()
-    tokens = tokenizer(prompt)
+    tokens  = tokenizer(prompt)
     indices = [vocab[token] for token in tokens]
     batch_size = 1
     hidden = model.init_hidden(batch_size, device)
@@ -51,18 +51,18 @@ def generate_text(prompt, max_seq, temperature, model, tokenizer, vocab, device,
             prediction, hidden = model(src, hidden)
             
             probability = torch.softmax(prediction[:, -1] / temperature, dim=-1)  
-            prediction = torch.multinomial(probability, num_samples=1).item()    
+            prediction  = torch.multinomial(probability, num_samples=1).item()    
             
             while prediction == vocab['<unk>']:  # sample again if <unk>
                 prediction = torch.multinomial(probability, num_samples=1).item()
 
-            if prediction == vocab['<eos>']:  # stop is <eos>
+            if prediction == vocab['<eos>']:  # stop if <eos>
                 break
 
             indices.append(prediction)  # output becomes input because autoregressive
 
-    itos = vocab.get_itos()
-    tokens = [itos[i] for i in indices]
+    itos    = vocab.get_itos() # List mapping indices to tokens
+    tokens  = [itos[i] for i in indices]
     return tokens
 
 
