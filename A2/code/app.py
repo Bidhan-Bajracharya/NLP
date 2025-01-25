@@ -22,9 +22,10 @@ model_path = os.path.join(current_dir, "../model/vocab_lm.pkl")
 with open(model_path, 'rb') as f:
     loaded_vocab = pickle.load(f)
 
-# Load the trained LSTM language model
+# Loading the trained LSTM language model
 model_path_2 = os.path.join(current_dir, "../model/best-val-lstm_lm.pt")
 
+# Same hyperparameters as used during training
 vocab_size = len(loaded_vocab)
 emb_dim = 1024
 hid_dim = 1024
@@ -34,24 +35,26 @@ lr = 1e-3
 lstm_model = LSTMLanguageModel(vocab_size, emb_dim, hid_dim, num_layers, dropout_rate).to(device)
 lstm_model.load_state_dict(torch.load(model_path_2, map_location=device))
 
-def generate_text(prompt, max_seq_len, temperature, model, tokenizer, vocab, device, seed=None):
+def generate_text(prompt, max_seq, temperature, model, tokenizer, vocab, device, seed=None):
     if seed is not None:
         torch.manual_seed(seed)
+
     model.eval()
     tokens = tokenizer(prompt)
-    indices = [vocab[t] for t in tokens]
+    indices = [vocab[token] for token in tokens]
     batch_size = 1
     hidden = model.init_hidden(batch_size, device)
+
     with torch.no_grad():
-        for _ in range(max_seq_len):
+        for _ in range(max_seq):
             src = torch.LongTensor([indices]).to(device)
             prediction, hidden = model(src, hidden)
             
-            probs = torch.softmax(prediction[:, -1] / temperature, dim=-1)  
-            prediction = torch.multinomial(probs, num_samples=1).item()    
+            probability = torch.softmax(prediction[:, -1] / temperature, dim=-1)  
+            prediction = torch.multinomial(probability, num_samples=1).item()    
             
             while prediction == vocab['<unk>']:  # sample again if <unk>
-                prediction = torch.multinomial(probs, num_samples=1).item()
+                prediction = torch.multinomial(probability, num_samples=1).item()
 
             if prediction == vocab['<eos>']:  # stop is <eos>
                 break
@@ -134,20 +137,20 @@ def search(n_clicks, query):
         else:
             max_seq_len = 30
             seed = 122
-            temperatures = [0.5, 0.7, 0.75, 0.8, 1.0]
+            temperatures = [0.5, 0.7, 0.75, 0.8, 1.0] # same temperatures as used during inference
 
             results = []
 
             for temperature in temperatures:
                 tokens = generate_text(
-                    prompt=query,
-                    max_seq_len=max_seq_len,
-                    temperature=temperature,
-                    model=lstm_model,
-                    tokenizer=tokenizer,
-                    vocab=loaded_vocab,
-                    device=device,
-                    seed=seed
+                    prompt      = query,
+                    max_seq     = max_seq_len,
+                    temperature = temperature,
+                    model       = lstm_model,
+                    tokenizer   = tokenizer,
+                    vocab       = loaded_vocab,
+                    device      = device,
+                    seed        = seed
                 )
 
                 results.append(html.Div([
