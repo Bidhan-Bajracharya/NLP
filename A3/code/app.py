@@ -1,5 +1,5 @@
 import dash
-from dash import dcc, html, Input, Output
+from dash import dcc, html, Input, Output, State
 import dash_bootstrap_components as dbc
 from torchtext.data.utils import get_tokenizer
 from nepalitokenizers import WordPiece
@@ -17,8 +17,8 @@ from Mutihead_Attention import MultiHeadAttentionLayer
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-TRG_LANGUAGE ='ne'
-SRC_LANGUAGE='en'
+TARG_LANG ='ne'
+SRC_LANG='en'
 
 token_transform = {}
 
@@ -32,49 +32,36 @@ params, state = torch.load(model_path)
 model = Seq2SeqTransformer(**params, device=device).to(device)
 model.load_state_dict(state)
 
-# Function to preprocess a source sentence (tokenization, normalization, etc.)
-def preprocess_src_sentence(sentence, lang):
-    token_transform["en"] = get_tokenizer('spacy', language='en_core_web_sm')
-    return {lang: token_transform[lang](sentence.lower())}
+# Function to apply sequential operations
+def sequential_operation(*transforms):
+    """
+    Example:
+        >>> token_transform["en"]("Hello world!")
+        ...     ['hello', 'world', '!']
+        >>> vocab_transform["en"](['hello', 'world', '!'])
+        ...     [123, 456, 789]
+        >>> tensor_transform([123, 456, 789])
+        ...     tensor([123, 456, 789])
+    """
 
-# Function to preprocess a target sentence (tokenization, normalization, etc.)
-def preprocess_trg_sentence(sentence, lang):
-    token_transform["ne"] = WordPiece()
-    return {lang: token_transform[lang].encode(sentence.lower()).tokens}
-
-# helper function to club together sequential operations
-def sequential_transforms(*transforms):
-    def func(txt_input):
+    def text_operation(input_text):
         for transform in transforms:
             try:
-                txt_input = transform(txt_input)
+                input_text = transform(input_text)
             except:
-                # If an exception occurs, assume it's an encoding and use encode function
-                txt_input = transform.encode(txt_input).tokens
-        return txt_input
-    return func
+                input_text = transform.encode(input_text).tokens # Encoding if error occurs
+        return input_text
+    return text_operation
 
 def tensor_transform(token_ids):
-    return torch.cat((torch.tensor([2]), torch.tensor(token_ids), torch.tensor([2])))
-
-
-# src and trg language text transforms to convert raw strings into tensors indices
-text_transform = {}
-token_transform["en"] = get_tokenizer('spacy', language='en_core_web_sm')
-token_transform["ne"] = WordPiece()
-for ln in [SRC_LANGUAGE, TRG_LANGUAGE]:
-    text_transform[ln] = sequential_transforms(token_transform[ln], #Tokenization
-                                               vocab_transform[ln], #Numericalization
-                                               tensor_transform)
+    return torch.cat((torch.tensor([2]), torch.tensor(token_ids), torch.tensor([2]))) # adding special tokens
 
 text_transform = {}
 token_transform["en"] = get_tokenizer('spacy', language='en_core_web_sm')
 token_transform["ne"] = WordPiece()
-for ln in [SRC_LANGUAGE, TRG_LANGUAGE]:
-    text_transform[ln] = sequential_transforms(token_transform[ln], #Tokenization
-                                               vocab_transform[ln], #Numericalization
-                                               tensor_transform)
 
+for ln in [SRC_LANG, TARG_LANG]:
+    text_transform[ln] = sequential_operation(token_transform[ln], vocab_transform[ln], tensor_transform)
 
 # Initialize Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -98,35 +85,31 @@ app.layout = dbc.Container([
         ), justify="center"
     ),
     dbc.Row(
-        dbc.Col(
-            dbc.Card([
-                dbc.CardBody([
-                    html.H5("Translated Nepali Output:"),
-                    html.P(id='translation-output', children="", className='text-muted')
-                ])
-            ], className='mt-4'), width=6
-        ), justify="center"
+        dbc.Col(width=6, id='output-card'), 
+        justify="center"
     )
 ], className='mt-5')
 
 @app.callback(
-    Output('translation-output', 'children'),
+    Output('output-card', 'children'),
     Input('translate-btn', 'n_clicks'),
-    Input('user-input', 'value')
+    State('user-input', 'value')
 )
 def translate_text(n_clicks, text):
-    if not text:
-        return ""
+    nepali_result = None
     
-    translation_result = None
+    if n_clicks and n_clicks > 0:
+        if not text:
+            return dbc.Card(
+                [dbc.CardBody([
+                        html.P(id='translation-output', children="Please input some text to translate.", className='text-muted')]
+                )], className='mt-4')
     
-    if n_clicks and text:
         model.eval() # putting the model in eval mode
 
         # Tokenize and transform the input sentence to tensors
-        input = text_transform[SRC_LANGUAGE](text).to(device)
-        print("==",input)
-        output = text_transform[TRG_LANGUAGE]("").to(device)
+        input = text_transform[SRC_LANG](text).to(device)
+        output = text_transform[TARG_LANG]("").to(device)
         input = input.reshape(1,-1)
         output = output.reshape(1,-1)
 
@@ -135,23 +118,25 @@ def translate_text(n_clicks, text):
 
         output = output.squeeze(0)
         output = output[1:]
-        print(output)
         output_max = output.argmax(1)
-        print("OutputMax",output_max)
-        mapping = vocab_transform[TRG_LANGUAGE].get_itos()
+        mapping = vocab_transform[TARG_LANG].get_itos()
 
-        translation_result = []
+        nepali_result = [] # translated nepali output
 
-        # Process the output tokens
         for token in output_max:
             token_str = mapping[token.item()]
+            # Ignoring special tokens
             if token_str not in ['[CLS]', '[SEP]', '[EOS]','<eos>']:
-                translation_result.append(token_str)
-                print(translation_result)
+                nepali_result.append(token_str)
+                print(nepali_result)
 
-        translation_result = ' '.join(translation_result)
+        # Joining the tokens to form a sentence
+        nepali_result = ' '.join(nepali_result)
 
-        return f"Translated: {translation_result}" 
+        return dbc.Card([dbc.CardBody([
+                html.H5("Translated Nepali Output:"),
+                html.P(id='translation-output', children=nepali_result, className='text-muted')
+            ])], className='mt-4')
     return ""
 
 if __name__ == '__main__':
