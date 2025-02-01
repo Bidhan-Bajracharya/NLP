@@ -41,3 +41,7 @@ Similarly, all three variations had low inference time. Among them, Multiplicati
 ### Multiplicative Attention
 
 ![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A3/static/multi.png)
+
+## Demo
+
+![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A3/static/demo.gif)
