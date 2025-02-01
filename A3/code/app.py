@@ -87,8 +87,23 @@ app.layout = dbc.Container([
     dbc.Row(
         dbc.Col(width=6, id='output-card'), 
         justify="center"
-    )
+    ),
+    
+    # Image at the bottom
+    html.Div(
+        html.Img(src="/assets/shilloute.png", className="silhouette-img"),
+        className="silhouette-container"
+    ),
+
+    html.Div(
+        html.Img(src="/assets/flag.png", className="flag-img"),
+        className="flag-container"
+    ),
+
 ], className='mt-5')
+
+# External CSS for positioning the image
+app.css.append_css({"external_url": "/assets/style.css"})
 
 @app.callback(
     Output('output-card', 'children'),
