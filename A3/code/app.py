@@ -122,7 +122,7 @@ def translate_text(n_clicks, text):
     
         model.eval() # putting the model in eval mode
 
-        # Tokenize and transform the input sentence to tensors
+        # Covert sentence to tensors
         input = text_transform[SRC_LANG](text).to(device)
         output = text_transform[TARG_LANG]("").to(device)
         input = input.reshape(1,-1)
