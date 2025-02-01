@@ -128,7 +128,6 @@ def translate_text(n_clicks, text):
             # Ignoring special tokens
             if token_str not in ['[CLS]', '[SEP]', '[EOS]','<eos>']:
                 nepali_result.append(token_str)
-                print(nepali_result)
 
         # Joining the tokens to form a sentence
         nepali_result = ' '.join(nepali_result)
