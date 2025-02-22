@@ -4,8 +4,22 @@ import pickle
 import torch, torchtext
 import os
 
+from transformers import BertTokenizer
+from sklearn.metrics.pairwise import cosine_similarity
+from Bert import BERT, calculate_similarity
+from transformers import BertTokenizer
+
 # Use GPU if available, otherwise use CPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+model_path = '../model/model_bert.pth'
+params, state = torch.load(model_path)
+model_bert = BERT(**params, device=device).to(device)
+model_bert.load_state_dict(state)
+
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
 app = Dash(__name__)
 
@@ -89,7 +103,21 @@ def search(n_clicks, query_one, query_two):
             return html.Div("Please fill the input fields.", style={'color': 'red'})
 
         else:
-            return html.Div("yo", style={
+            results = []
+
+            print("q1: ", query_one)
+            print("q2: ", query_two)
+
+            score = calculate_similarity(model_bert, tokenizer, params['max_len'], query_one, query_two, device)
+
+            print(score)
+
+            results.append(html.Div([
+                html.H5(f"Calculated similarity score: ", style={'margin-bottom': '10px', 'font-family': 'Arial, sans-serif'}),
+                html.P(f"{score}", style={'color': 'black', 'font-family': 'Arial, sans-serif', 'textAlign': 'left'})
+            ]))
+            
+            return html.Div(results, style={
                 'background-color': '#f9f9f9',
                 'border': '1px solid #e0e0e0',
                 'border-radius': '10px',
