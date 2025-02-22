@@ -52,7 +52,7 @@ app.layout = html.Div([
                 }
             ),
             html.Button(
-                'Search',
+                'Generate',
                 id='search-button',
                 n_clicks=0,
                 style={
@@ -90,6 +90,10 @@ app.layout = html.Div([
     ),
 ])
 
+mapping = {
+
+}
+
 # Callback to handle search queries
 @app.callback(
     Output('search-results', 'children'),
@@ -112,9 +116,20 @@ def search(n_clicks, query_one, query_two):
 
             print(score)
 
+            classification = ""
+
+            if score > 0:
+                classification = "Entailment"
+            elif score < 0:
+                classification = "Contradiction"
+            elif score == 0:
+                classification = "Neutral"
+            else:
+                classification = "Error"
+
             results.append(html.Div([
                 html.H5(f"Calculated similarity score: ", style={'margin-bottom': '10px', 'font-family': 'Arial, sans-serif'}),
-                html.P(f"{score}", style={'color': 'black', 'font-family': 'Arial, sans-serif', 'textAlign': 'left'})
+                html.P(f"{classification} ({score:.3f})", style={'color': 'black', 'font-family': 'Arial, sans-serif', 'textAlign': 'left'})
             ]))
             
             return html.Div(results, style={
@@ -127,7 +142,7 @@ def search(n_clicks, query_one, query_two):
                 'max-width': '50%',
             })
 
-    return html.Div("Enter a query to see results.", style={'color': 'gray'})
+    return html.Div("Enter two sentences to see results.", style={'color': 'gray'})
 
 # Running the app
 if __name__ == '__main__':
