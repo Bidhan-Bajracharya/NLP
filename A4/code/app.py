@@ -14,7 +14,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-model_path = '../model/model_bert.pth'
+model_path = '../model/sen_bert.pth'
 params, state = torch.load(model_path)
 model_bert = BERT(**params, device=device).to(device)
 model_bert.load_state_dict(state)
@@ -118,11 +118,11 @@ def search(n_clicks, query_one, query_two):
 
             classification = ""
 
-            if score > 0:
+            if score >= 0.75:
                 classification = "Entailment"
-            elif score < 0:
+            elif score < 0.4:
                 classification = "Contradiction"
-            elif score == 0:
+            elif 0.4 <= score < 0.75:
                 classification = "Neutral"
             else:
                 classification = "Error"
