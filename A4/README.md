@@ -7,7 +7,6 @@
 | Model Type  | Training Loss with SNLI and MNLI | Cosine Similarity(SNLI and MNLI) | Cosine Similarity (Similar Sentences) | Cosine Similarity (Dissimilar Sentences) |
 |------------|------------------------------|----------------------------------------------|--------------------------------------------------|--------------------------------------------------|
 | Custom model   | 10.21                        | 0.992                                         | 0.992                                             | 0.999                                             |
-                                      | 0.999                                             |
 
 <hr>
 
