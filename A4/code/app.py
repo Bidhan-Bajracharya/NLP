@@ -25,7 +25,7 @@ app = Dash(__name__)
 
 # Layout
 app.layout = html.Div([
-    html.H1("A4: Sentence Embedding", style={'textAlign': 'center', 'font-family': 'Arial, sans-serif', 'margin-top': '20px'}),
+    html.H1("A4: Do you Agree?", style={'textAlign': 'center', 'font-family': 'Arial, sans-serif', 'margin-top': '20px'}),
     html.Div([
         html.Div([
             dcc.Input(
