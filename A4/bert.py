@@ -113,14 +113,10 @@ class BERT(nn.Module):
         enc_self_attn_mask = get_attn_pad_mask(input_ids, input_ids, self.device)
         for layer in self.layers:
             output, enc_self_attn = layer(output, enc_self_attn_mask)
-        # output : [batch_size, len, d_model], attn : [batch_size, n_heads, d_mode, d_model]
         
-        # 1. predict next sentence
-        # it will be decided by first token(CLS)
         h_pooled   = self.activ(self.fc(output[:, 0])) # [batch_size, d_model]
         logits_nsp = self.classifier(h_pooled) # [batch_size, 2]
 
-        # 2. predict the masked token
         masked_pos = masked_pos[:, :, None].expand(-1, -1, output.size(-1)) # [batch_size, max_pred, d_model]
         h_masked = torch.gather(output, 1, masked_pos) # masking position [batch_size, max_pred, d_model]
         h_masked  = self.norm(F.gelu(self.linear(h_masked)))
