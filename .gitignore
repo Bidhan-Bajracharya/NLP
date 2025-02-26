@@ -7,3 +7,6 @@ A3/code/__pycache__
 A4/model
 A4/code/__pycache__
 A5/model
+A5/mlruns
+A5/code/__pycache__
+A5/wandb
