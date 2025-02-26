@@ -100,20 +100,26 @@ app.layout = html.Div(
                 html.Div(
                     children=[
                         html.H3("Response:", style={'marginTop': '20px'}),
-                        html.Div(
-                            id='model-response',
-                            style={
-                                'padding': '20px',
-                                'border': '1px solid #ddd',
-                                'borderRadius': '8px',
-                                'backgroundColor': '#fff',
-                                'boxShadow': '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                'whiteSpace': 'pre-wrap',
-                                'fontSize': '16px',
-                                'color': '#333',
-                                'maxHeight': '300px',
-                                'overflowY': 'auto',
-                            }
+                        dcc.Loading(
+                            id="loading-spinner",
+                            children=[
+                                html.Div(
+                                    id='model-response',
+                                    style={
+                                        'padding': '20px',
+                                        'border': '1px solid #ddd',
+                                        'borderRadius': '8px',
+                                        'backgroundColor': '#fff',
+                                        'boxShadow': '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                        'whiteSpace': 'pre-wrap',
+                                        'fontSize': '16px',
+                                        'color': '#333',
+                                        'maxHeight': '300px',
+                                        'overflowY': 'auto',
+                                    }
+                                )
+                            ],
+                            type="circle" 
                         ),
                     ],
                 ),
