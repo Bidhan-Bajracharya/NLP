@@ -18,16 +18,16 @@ This project makes use of the **Anthropic HH-RLHF dataset**, which is publicly a
 # Training Results
 
 ## Training Loss
-![]()
+![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A5/static/trainLoss.png)
 
 ## Logits Chosen
-![]()
+![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A5/static/logitsChosen.png)
 
 ## Logits Rejected
-![]()
+![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A5/static/logitsRejected.png)
 
 ## Rewards Accuracies
-![]()
+![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A5/static/rewardsAccuracies.png)
 
 # To run the app
 - Go inside `A5/code folder
@@ -38,4 +38,4 @@ This project makes use of the **Anthropic HH-RLHF dataset**, which is publicly a
 My model can be found in HuggingFace, over [here](https://huggingface.co/bidhan-ait/gpt2-a5) 🤗
 
 # Demo
-![]()
+![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A5/static/demo.gif)
