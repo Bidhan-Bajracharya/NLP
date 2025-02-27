@@ -35,7 +35,7 @@ app.layout = html.Div(
             },
             children=[
                 html.H2(
-                    "Start Chatting d(￣◇￣)b",
+                    "Let's Chat d(￣◇￣)b",
                     style={
                         'textAlign': 'center',
                         'color': '#4a90e2',
