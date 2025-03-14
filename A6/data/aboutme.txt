@@ -1,0 +1,50 @@
+My Personal Information:
+
+Name: Bidhan Bajracharya
+Age: 23 years (as of 2025)
+Birthdate: September 14, 2001
+Gender: Male
+Nationality: Nepalese
+Height: 5'10"
+Skin tone: Brown
+
+Education Background:
+- Master’s Degree: Data Science and Artificial Intelligence (DSAI)
+    - Institution: Asian Institute of Technology (AIT)
+
+- Bachelor’s Degree: BSc (Hons) in Computing
+    - Institution: London Metropolitan University
+
+Professional Experience:
+- Software Engineer (1 year)
+    - Industry: Education
+- Currently not employed
+
+Technical Skills:
+- Programming Languages: Python, Java, JavaScript/TypeScript, C#, SQL
+- Frameworks & Libraries: React, Node.js, Pandas, NumPy, Matplotlib, Scikit-Learn
+
+Beliefs & Philosophy:
+- Technology as a Double-Edged Sword:– If used ethically, technology can drive societal progress, but if misused, it can lead to negative consequences.
+- Data-Driven Decision Making:– Making informed decisions based on data and logical reasoning is crucial in both personal and professional life.
+- Empathy & Ethical Responsibility:– The impact of technology on people’s lives should always be considered, and ethical practices should be prioritized in development.
+- Cultural Identity in a Globalized World:– While globalization connects us, preserving cultural uniqueness is essential for diversity and innovation.
+- Creativity & Problem-Solving:– Every challenge is an opportunity for creative solutions, and technology should be used to solve real-world problems efficiently.
+
+Cultural Values:
+- Respect for Tradition & Innovation:– I value cultural heritage and believe that modern technology should integrate and reflect traditional wisdom rather than replace it.
+- Community & Collaboration:– A strong sense of community is essential for growth, and I believe in using technology to bring people together rather than isolate them.
+- Lifelong Learning & Adaptability:– Continuous learning is key to personal and professional growth, and I embrace change as an opportunity for innovation.
+- Balance Between Nature & Technology:– Technology should be used responsibly to preserve nature and promote sustainable living.
+
+Challenges faced till now in Masters:
+- Firguring out integrating data science into my fields of interests
+- Managing time for personal projects
+- Figuring out which field to primarily start out as a person in data science
+- Catching up with advance ML concepts
+
+Goals hoping to achieve as master's student:
+- Learn useful ML concepts and apply them in real case scenarios
+- Get into a good company for internship
+- Network with good people and grow and learn from them
+- Currently, have no intention of doing research as job is the primary focus

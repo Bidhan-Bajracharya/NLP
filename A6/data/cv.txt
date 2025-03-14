@@ -1,0 +1,65 @@
+NAME: Bidhan Bajracharya
+
+EDUCATION BACKGROUND:
+- Asian Institute Of Technology
+    - Master of Science (M.S) - Data Science and AI | August 2024 - May 2026
+
+- Islington College (Affiliated to London Metropolitan University)
+    - BSc (Hons) Computing | Feb 2021 – Dec 2023 | Final Percentage: 76.56%
+
+- Uniglobe SS/College
+    - High School | Jan 2018 – Dec 2020 | CGPA: 3.78/4.0
+
+PROFESSIONAL EXPERIENCE:
+Vurilo Pvt. Ltd. | Junior Software Engineer (Jun 2023 – May 2024)
+    - Worked on Agile methodology, ensuring successful development and timely delivery of tasks.
+    - Conducted data analysis, interpretation, and utilization to enhance project efficiency.
+    - Implemented ChatGPT plugins, AWS services, and REST APIs into project functionalities.
+
+Level 9 Tech | Front-end Developer Intern (Aug 2022 – Dec 2022)
+    - Collaborated with a team of developers to build and maintain web applications.
+    - Utilized Git and GitHub to manage project workflows.
+    - Developed new features and improved existing functionalities to enhance user experience.
+
+PROJECTS:
+- Vurilo Insights (Python, SQL)
+    - Extracted data from APIs, databases, and CSV files using Python and SQL.
+    - Pre-processed raw data with Pandas and NumPy, handling missing values and inconsistencies.
+    - Conducted exploratory data analysis (EDA) with statistical methods and visualization techniques.
+    - Created interactive dashboards using Matplotlib, Seaborn, and Plotly.
+
+- Vurilo (TypeScript, Next.js, React.js, Tailwind, Firebase)
+    - Developed an E-Learning platform for students.
+    - Used Next.js for server-side rendering to enhance user experience.
+    - Integrated Firebase for secure authentication and real-time data synchronization.
+
+- Moneyvest (TypeScript, React.js, AWS Cognito, Ant-Design)
+    - Built an online platform for finance, investing, and trading education.
+    - Implemented AWS Cognito for secure user authentication.
+    - Collaborated with an international client for API optimization and integration.
+    - Designed data visualization graphs to improve user insights.
+
+- Uddum (Vue.js, Nuxt.js)
+    - Developed an online airplane ticket booking platform.
+    - Worked with experienced developers to optimize and resolve issues.
+    - Implemented REST APIs and developed an intuitive UI/UX.
+
+AWARDS AND ACHIEVEMENT:
+- AAA Scholarship Award (2022)
+    - Recognized for exceptional Attitude, Attendance, and Academic performance.
+
+TECHNICAL SKILLS:
+Programming Languages: Python, Java, JavaScript/TypeScript, C#, SQL
+Tools: Git/GitHub, Jupyter Notebook, VS Code, IntelliJ, PyCharm, Docker, Tableau, AWS, PostgreSQL, MySQL
+Libraries & Frameworks: Pandas, NumPy, Matplotlib, Scikit-Learn, React.js
+
+EXTRACURRICULAR ACTIVITIES:
+- Arts and Culture Club (2018 – 2020)
+    - Participated in creative competitions, showcasing artistic talents.
+    - Hosted club activities, promoting cultural appreciation and creativity.
+    - Collaborated with peers to organize and execute events.
+
+- Student Academic Representative (2021 & 2023)
+    - Represented class interests and facilitated communication between students and faculty.
+    - Organized weekly forms to document and communicate student feedback.
+    - Participated in faculty meetings to address academic concerns.
