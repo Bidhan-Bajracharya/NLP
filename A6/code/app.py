@@ -83,7 +83,6 @@ app.layout = dbc.Container([
             dbc.Card([
                 dbc.CardBody([
                     html.H4("Answer", className="text-center"),
-                    # html.Div(id="bot-output", className="p-3 border bg-light", style={"min-height": "100px"}),
                     dcc.Loading(
                         id="loading-spinner",
                         children=[

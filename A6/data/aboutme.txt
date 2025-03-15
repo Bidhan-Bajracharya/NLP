@@ -7,6 +7,10 @@ Gender: Male
 Nationality: Nepalese
 Height: 5'10"
 Skin tone: Brown
+Year(s) of work experience: 1 year
+Current role or job responsibility: Student (no jobs)
+Major or field I pursued during my education: Data science
+Highest level of education: Masters
 
 Education Background:
 - Master’s Degree: Data Science and Artificial Intelligence (DSAI)
