@@ -12,7 +12,7 @@ For the llm model I went ahead and chose `llama3.2` from Ollama
 
 ## Analysis of issues related to the models providing unrelated information.
 
-**Embedding Model Limitations**
+**1) Embedding Model Limitations**
 
 The embedding model `(sentence-transformers/all-mpnet-base-v2)` converts text into vector representations for similarity searches. However, issues may arise if:
 - The embeddings do not accurately capture the semantic meaning of a query, leading to retrieval of irrelevant documents.
@@ -24,7 +24,7 @@ The embedding model `(sentence-transformers/all-mpnet-base-v2)` converts text in
 Possible fixes for this issue would be:
 - Use hybrid retrieval (combining FAISS with BM25 or keyword search).
 
-**Vector Store (FAISS) Issues**
+**2) Vector Store (FAISS) Issues**
 
 FAISS is efficient for storing and retrieving embeddings, but it has its own challenges:
 
@@ -39,7 +39,7 @@ Possible fixes for this issue would be:
 - Instead of large paragraphs, creating smaller, context-rich sections.
 - Apply reranking methods.
 
-**LLM (LLaMA 3.2) Hallucinations**
+**3) LLM (LLaMA 3.2) Hallucinations**
 
 The generator model (LLaMA 3.2) may produce unrelated or incorrect information due to:
 
