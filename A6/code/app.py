@@ -1,11 +1,65 @@
 import dash
 from dash import dcc, html, Input, Output, State
 import dash_bootstrap_components as dbc
-# from langchain.chains import LLMChain
-# from langchain.llms import OpenAI  # Use any local LLM instead of API if needed
+from langchain.prompts import PromptTemplate
+from langchain_ollama import OllamaLLM
+from langchain.document_loaders import TextLoader
+import os
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.vectorstores import FAISS
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import RetrievalQA
 
-# Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+prompt_template = """
+    You are an assistant that provides useful information about Bidhan. Use the following pieces of retrieved context to answer the question. 
+    If the question is about Bidhan's education, summarize his degrees, institutions, and fields of study.
+    If you don't know the answer, just say that you don't know. Keep the answer concise.
+    {context}
+    Question: {question}
+    Answer:
+    """.strip()
+
+PROMPT = PromptTemplate(template= prompt_template)
+llm = OllamaLLM(model="llama3.2")
+
+all_documents = []
+
+aboutme_file = os.path.join(current_dir, "../data/aboutme.txt")
+cv_file = os.path.join(current_dir, "../data/cv.txt")
+
+files = [aboutme_file, cv_file]
+for file in files:
+    loader = TextLoader(file)
+    documents = loader.load()
+    all_documents.extend(documents)
+
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+doc = text_splitter.split_documents(all_documents)
+
+embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+
+vector_path = os.path.join(current_dir, "../vector-store")
+db_file_name = 'personal_info'
+
+vectordb = FAISS.load_local(
+    folder_path=os.path.join(vector_path, db_file_name),
+    embeddings=embedding_model,
+    allow_dangerous_deserialization=True # because I'm sure the file is safe
+)
+
+retriever = vectordb.as_retriever(search_kwargs={"k": 3})
+memory = ConversationBufferMemory(memory_key="chat_history", input_key="question", output_key="answer")
+qa_chain = RetrievalQA.from_chain_type(
+    llm = llm,
+    chain_type = "stuff",
+    retriever = retriever,
+    return_source_documents = True,
+    chain_type_kwargs={"prompt": PROMPT}
+)
 
 # Dummy function simulating LangChain response (replace with actual chain)
 def chatbot_response(user_input):
@@ -37,7 +91,12 @@ app.layout = dbc.Container([
                     html.H4("Answer", className="text-center"),
                     html.Div(id="bot-output", className="p-3 border bg-light", style={"min-height": "100px"}),
                     dbc.Collapse(
-                        dbc.Card(dbc.CardBody(html.Ul(id="source-list")), style={"margin-top": "20px"}),
+                        dbc.Card(
+                            dbc.CardBody([
+                                html.H5("Sources", className="card-title"),
+                                html.Ul(id="source-list")]
+                            ), style={"margin-top": "20px"}
+                        ),
                         id="source-collapse",
                         is_open=False,
                     ),
@@ -54,9 +113,19 @@ app.layout = dbc.Container([
     [State("user-input", "value")]
 )
 def update_chat(n_clicks, user_input):
+    sources = []
     if n_clicks > 0 and user_input:
-        response, sources = chatbot_response(user_input)
-        return response, [html.Li(src) for src in sources], True
+        result = qa_chain({"query": user_input})
+        source_docs = result.get('source_documents', [])
+
+        for doc in source_docs:
+            sources.append(doc.metadata.get('source', 'Unknown Source'))
+        
+        print(sources)
+        unique_sources = list(set(sources))
+
+        response = result["result"]
+        return response, [html.Li(src) for src in unique_sources], True
     return "", [], False
 
 # Run the app
