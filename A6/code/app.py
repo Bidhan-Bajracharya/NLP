@@ -89,18 +89,44 @@ app.layout = dbc.Container([
             dbc.Card([
                 dbc.CardBody([
                     html.H4("Answer", className="text-center"),
-                    html.Div(id="bot-output", className="p-3 border bg-light", style={"min-height": "100px"}),
+                    # html.Div(id="bot-output", className="p-3 border bg-light", style={"min-height": "100px"}),
+                    dcc.Loading(
+                        id="loading-spinner",
+                        children=[
+                            html.Div(
+                                id='bot-output',
+                                className="p-3 border bg-light", style={"min-height": "100px"}
+                            )
+                        ],
+                        type="circle" 
+                    ),
                     dbc.Collapse(
                         dbc.Card(
-                            dbc.CardBody([
-                                html.H5("Sources", className="card-title"),
-                                html.Ul(id="source-list")]
+                            dcc.Loading(
+                                id="source-list",
+                                children=[
+                                    dbc.CardBody([
+                                        html.H5("Sources", className="card-title"),
+                                        html.Ul(id="source-list")]
+                                    )
+                                ],
+                                type="circle" 
                             ), style={"margin-top": "20px"}
                         ),
                         id="source-collapse",
                         is_open=False,
                     ),
-                ])
+                ]),
+                # dcc.Loading(
+                #             id="source-list",
+                #             children=[
+                #             dbc.CardBody([
+                #                 html.H5("Sources", className="card-title"),
+                #                 html.Ul(id="source-list")]
+                #             )
+                #             ],
+                #             type="circle" 
+                #         ),
             ], className="mt-3"),
         ]),
     ])
