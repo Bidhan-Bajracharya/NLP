@@ -1,0 +1,42 @@
+[
+    {
+        "question": "How old are you?",
+        "answer": "You are 23 years old (as of 2025)."
+    },
+    {
+        "question": "What is your highest level of education?",
+        "answer": "I don't know the answer to this question. The provided context doesn't mention Bidhan's highest level of education or any specific degree held by him."
+    },
+    {
+        "question": "What major or field of study did you pursue during your education?",
+        "answer": "During my education, I pursued a Master's degree in Bidhan. Unfortunately, the provided context does not specify the exact major or field of study pursued by Bidhan."
+    },
+    {
+        "question": "How many years of work experience do you have?",
+        "answer": "I don't know the exact number of years of work experience Bidhan has. However, he mentioned that his professional experience started in June 2023, but I don't have enough information to determine how long he has been working."
+    },
+    {
+        "question": "What type of work or industry have you been involved in?",
+        "answer": "Based on the provided context, I can tell that Bidhan has been involved in developing and implementing various projects related to finance, investing, trading education, online platforms, and airplane ticket booking. The specific industries or types of work mentioned include:\n\n* Finance and investing\n* Online education and training platforms (e.g., Moneyvest)\n* Airplane ticket booking and management (Uddum)\n\nThese projects demonstrate Bidhan's expertise in building and integrating complex systems using various technologies such as AWS, React.js, Vue.js, Nuxt.js, and more."
+    },
+    {
+        "question": "Can you describe your current role or job responsibilities?",
+        "answer": "I don't have information about Bidhan's current role or job responsibilities. The provided context only includes his professional experience and does not mention his current position or employer."
+    },
+    {
+        "question": "What are your core beliefs regarding the role of technology in shaping society?",
+        "answer": "According to Bidhan's Beliefs & Philosophy section, his core beliefs regarding the role of technology in shaping society include:\n\n- Technology can drive societal progress if used ethically.\n- Technology has the potential for negative consequences if misused.\n- It is crucial to prioritize empathy and ethical responsibility when developing technology.\n\nThese beliefs emphasize the importance of responsible innovation and considering the impact of technology on people's lives."
+    },
+    {
+        "question": "How do you think cultural values should influence technological advancements?",
+        "answer": "Bidhan believes that cultural values should influence technological advancements in a way that integrates traditional wisdom with modern technology. He thinks that technology should reflect cultural heritage while also promoting sustainable living and preserving nature."
+    },
+    {
+        "question": "As a master's student, what is the most challenging aspect of your studies so far?",
+        "answer": "According to Bidhan's context, the most challenging aspect of his Master's studies so far is:\n\nFiguring out which field to primarily start out as a person in data science and integrating data science into his existing fields of interest."
+    },
+    {
+        "question": "What specific research interests or academic goals do you hope to achieve during your time as a master's student?",
+        "answer": "Bidhan does not explicitly state their specific research interests. However, they do mention that their primary goal is to learn useful ML concepts and apply them in real case scenarios, suggesting an interest in applying machine learning to practical problems."
+    }
+]
