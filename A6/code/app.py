@@ -61,12 +61,6 @@ qa_chain = RetrievalQA.from_chain_type(
     chain_type_kwargs={"prompt": PROMPT}
 )
 
-# Dummy function simulating LangChain response (replace with actual chain)
-def chatbot_response(user_input):
-    response = f"Bot: This is a response to '{user_input}'"
-    sources = ["Source 1", "Source 2", "Source 3"]  # Replace with actual sources
-    return response, sources
-
 # Layout
 app.layout = dbc.Container([
     html.H1("A6: Let's Talk with Yourself", className="text-center", style={"margin-bottom": "80px"}),
@@ -103,7 +97,7 @@ app.layout = dbc.Container([
                     dbc.Collapse(
                         dbc.Card(
                             dcc.Loading(
-                                id="source-list",
+                                id="load-spinner",
                                 children=[
                                     dbc.CardBody([
                                         html.H5("Sources", className="card-title"),
@@ -117,16 +111,6 @@ app.layout = dbc.Container([
                         is_open=False,
                     ),
                 ]),
-                # dcc.Loading(
-                #             id="source-list",
-                #             children=[
-                #             dbc.CardBody([
-                #                 html.H5("Sources", className="card-title"),
-                #                 html.Ul(id="source-list")]
-                #             )
-                #             ],
-                #             type="circle" 
-                #         ),
             ], className="mt-3"),
         ]),
     ])
