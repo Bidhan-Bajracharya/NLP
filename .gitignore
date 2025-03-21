@@ -14,3 +14,5 @@ A6/model
 A6/code/__pycache__
 A6/vector-store
 A7/model
+A7/student-lora
+A7/wandb
