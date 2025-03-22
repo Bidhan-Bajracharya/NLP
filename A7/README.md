@@ -89,5 +89,15 @@ To tackle this performance issue, following techniques can be applied:
 
 - And to tackle the learning rate issue, we could implement warm-up strategies. Gradient clipping can also be applied to prevent sudden spikes in loss due to large updates. Also, reducing the initial learning rate and adjusting it dynamically during training could help maintain stability.
 
+# Web application interface documentation
+For this assignment, I made the interface using Dash. The entire UI along with necessary model implemenetations are carried out in `app.py` file. It is a simple UI with a prompt field, submit button, some validations and a result section. The demo can be found in the `README.md` file of A7 folder and the actual `demo.gif` file is inside `static` folder.
+
+The model used for this demo is **even-layered distilled** model - as from the above observations it performed the best, even though all three models can classify farily well.
+
+The user interaction flow is as follows:
+- User enters a prompt into the field
+- Clicks the submit button
+- Classification result is displayed as either **Toxic** or **Non-Toxic**
+
 # Demo
 ![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/demo.gif)
