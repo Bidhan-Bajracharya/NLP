@@ -1,6 +1,33 @@
 # Dataset
 The dataset was taken from [HuggingFace](https://huggingface.co/nicholasKluge/ToxicityModel), named `nicholasKluge/ToxicityModel`.
 
+# Metric Visualizations
+
+## Training metrics
+
+<p align="center">
+  <img src="https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/even.png" width="30%" />
+  <img src="https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/odd.png" width="30%" />
+  <img src="https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/lora.png" width="30%" />
+</p>
+
+## Testing metrics
+
+<p align="center">
+  <div>
+    <h3>Even Layer Confusion Matrix</h3>
+    <img src="https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/even_confusion.png" />
+  </div>
+  <div>
+    <h3>Odd Layer Confusion Matrix</h3>
+    <img src="https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/odd_confusion.png" />
+  </div>
+  <div>
+    <h3>LoRA Confusion Matrix</h3>
+    <img src="https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/lora_confusion.png" />
+  </div>
+</p>
+
 # Evaluation and Analysis
 
 ## Even layered distilled BERT
@@ -50,7 +77,7 @@ So, the best model among all three was the even-layered distilled BERT model as 
 |--------------|---------------|----------|-----------|--------|----------|
 | Odd Layer    | 0.1661 | 93.40%   | 93.42%    | 93.40% | 93.40%   |
 | Even Layer   | 0.1657 | 93.80%   | 93.83%    | 93.80% | 93.80%   |
-| LoRA         | 0.6971 | 89.90%   | 89.92%    | 89.90% | 89.90%   |
+| LoRA         | 0.1252 | 89.90%   | 89.92%    | 89.90% | 89.90%   |
 
 ## Discussion of Challenges
 
@@ -79,15 +106,7 @@ For improvement following techniques can be applied:
 - Since, student model is not effictively mimicking the teacher model, we can reduce the weight of divergence loss or gradually introduce it after a few epochs
 - Can apply learning rate scheduler to help prevent performance degradation
 
-LoRA performed well in the first few steps, with decreasing training loss and improving accuracy. But after step 2500 - there is a sharp drop in performance, especially in validation loss and accuracy. At the end stage, accuracy stablize around 50% which is just random guessing for binary classification. Possible causes for this performance drop could be:
-- **Overfitting**: Mid-Late stage of training, the model may have started memorizing the data instead of generalizing.
-
-- **Learning rate issues**: The drastic change in training and validation loss suggests that the model might be experiencing instability in learning.
-
-To tackle this performance issue, following techniques can be applied:
-- To mitiagte overfitting, we could increase the dropout rate and adjust the weight decay as well. Early stopping can also be applied based on the validation loss.
-
-- And to tackle the learning rate issue, we could implement warm-up strategies. Gradient clipping can also be applied to prevent sudden spikes in loss due to large updates. Also, reducing the initial learning rate and adjusting it dynamically during training could help maintain stability.
+LoRA performed well during the training. The training and validaiton loss gradually decreased with slight fluctuation - but we can see an overall decreasing trend. Which suggests that our model is generalizing well.
 
 # Web application interface documentation
 For this assignment, I made the interface using Dash. The entire UI along with necessary model implemenetations are carried out in `app.py` file. It is a simple UI with a prompt field, submit button, some validations and a result section. The demo can be found in the `README.md` file of A7 folder and the actual `demo.gif` file is inside `static` folder.
