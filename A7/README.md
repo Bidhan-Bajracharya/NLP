@@ -90,4 +90,4 @@ To tackle this performance issue, following techniques can be applied:
 - And to tackle the learning rate issue, we could implement warm-up strategies. Gradient clipping can also be applied to prevent sudden spikes in loss due to large updates. Also, reducing the initial learning rate and adjusting it dynamically during training could help maintain stability.
 
 # Demo
-![]()
+![](https://github.com/Bidhan-Bajracharya/NLP/blob/main/A7/static/demo.gif)
